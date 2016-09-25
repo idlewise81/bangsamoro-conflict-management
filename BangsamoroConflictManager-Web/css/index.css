@@ -1,0 +1,227 @@
+
+body{ margin:0 auto; 
+	
+	width: 900px;}
+nav {
+    line-height:20px;
+    background-color:#eeeeee;
+    height:20px;
+
+    padding:5px;	      
+}
+header {
+    background-color:#333;
+    color:white;
+    position: relative;
+    padding:5px;	
+    height: 35px; 
+
+}
+#headtitle1{
+
+   float:left;
+   font-size: 2em;
+}
+#headtitle2{
+	top:10px;
+	float:right;
+	font-size: 1em;	
+}
+
+#searchcont{
+	width:100%;
+	height:28px;
+	padding-top: 2px;
+
+}
+#container{
+	width:100%;
+	height:470px;
+	margin:0 auto;
+	background-color:#eeeeee;
+}
+#containercenter{
+	width:90%;
+	height:470px;
+	margin:0 auto;
+	background-color:#eeeeee;
+}
+
+
+div.outer-div-left {
+	float:left;
+
+	width:5%;
+	height:470px;
+	background-color:#eeeeee;
+
+}
+div.outer-div-right {
+	float:right;
+	width:5%;
+	height:470px;
+	background-color:#eeeeee;
+
+
+}
+
+
+div.middle-div {
+	cursor: pointer;
+	width: 60px;
+	height: 60px;
+    font-weight: bold;
+    color: white;
+	text-align:center;
+	font-size: 3em;	
+    border: 15px;
+    border-style: solid;
+    border-color: white;
+	background:#333;
+	border-radius: 43px 43px 43px;	
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}	
+footer {
+	margin-top:5px;
+    background-color:#333;
+    color:white;
+
+}
+
+
+table {
+color: #333;
+font-family: Helvetica, Arial, sans-serif;
+width: 100%;
+border-collapse:
+collapse; border-spacing: 0;
+}
+
+td, th {
+border: 1px solid transparent; 
+height: 25px;
+transition: all 0.3s;  
+}
+
+.frmImageUpload {
+background-color: #F9D735;
+width:400px;
+padding:10px;
+}
+.frmImageUpload label{
+font-weight: bold;
+color: #A0A0A0;
+}
+.btnSubmit {
+background-color: #3FA849;
+padding:4px;
+border: #3FA849 1px solid;
+color: #FFFFFF;
+}
+.inputFile {
+padding: 3px;
+background-color: #FFFFFF;
+}
+
+#home  {
+  clear: none; 
+  height:470px;
+}
+#homeleft{
+    float: left;
+	height:470px;
+	background-color:#eeeeee;
+	width:50%;
+	position: relative;
+}
+#homeright{
+	float: right;
+	height:470px;
+	background-color:#eeeeee;
+	width:50%;
+	position: relative;
+}
+div.homebooksize{	
+	margin:10px;
+
+	height:450px;
+	background-color:white;
+	width:90%;
+	position: absolute;
+}
+div.hometitle{
+	margin:10px;
+	font-size: 1.5em;
+width:90%;
+	font-weight: bold;
+    text-align: center;
+
+	position: absolute;
+}
+div.homeprice{
+	color: white;
+    border-radius: 5px 20px;
+    background-image: url("../images/price_label.png");
+    height:50px;
+    width:82px;
+   	padding-top: 25px;
+    text-align: center;
+	font-size: .9em;
+	top:55px;
+	right:5px;
+	position: absolute;
+}
+img.homebookimg{
+	/*border-color: #eeeeee;
+	border-style: solid;
+	background-image: url("../images/the8thhabit.png");*/
+	top:70px;
+	left:60px;
+	width:250px;
+	height:250px;
+	position: absolute;
+}
+p.homesynopsis{
+    top:310px;
+	left:30px;
+	width:330px;
+	font-style: normal; font-weight: normal;
+    position: absolute;
+ 
+}
+div.homeauthor{
+	color:maroon;
+    top:420px;
+	left:30px;
+	width:330px;
+    position: absolute;
+ 
+}
+div.homestock{
+	color:maroon;
+    top:440px;
+	left:30px;
+	width:330px;
+    position: absolute;
+ 
+}
+#catHead{	
+
+	margin:0 auto;
+	
+	height:40px;
+	width:80%;
+
+}
+#category{	
+
+	margin:0 auto;
+	
+	height:146px;
+	width:80%;
+
+}

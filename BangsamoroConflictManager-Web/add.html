@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Storage Example</title>
+
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+  <link rel="stylesheet" href="main.css">
+  
+  <!-- Firebase -->
+  <!-- *******************************************************************************
+       * TODO(DEVELOPER): Paste the initialization snippet by navigating to:
+
+        https://console.firebase.google.com
+
+       and choosing a project you've created.  Then click the red HTML logo at the top
+       right of the page with the caption "Add Firebase to your web app".
+
+       Copy the snippet that appears in place of this comment.
+       *************************************************************************** -->
+       <script type="text/javascript">
+    window.onload = function() {
+     // alert("sdsf");
+    };
+</script>
+</head>
+<body>
+  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+
+    <main class="mdl-layout__content mdl-color--grey-100">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+
+        <!-- Container for the demo -->
+        <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+          <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+            <h2 class="mdl-card__title-text">File Incident</h2>
+          
+                      
+          </div>
+          <div class="mdl-card__supporting-text mdl-color-text--grey-600" id="messagesDiv">
+     <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin"
+      onclick="toggleSignIn()" style="float: right;">Sign Out</button>
+           <form name="form1" method="" action="" onsubmit="return myFunction()">
+            Date
+            <input class="mdl-textfield__input" style="display:inline;width:auto;"  
+                 onblur="return validateDate()" onemptied="return today()" 
+                     id="date" name="date" placeholder="Date (mm/dd/yyyy)" required/> 
+			<br><br> 
+			Province
+            <select  style="display:inline;width:auto;"  onchange="populateMunicipality()" 
+                     id="province" name="province" placeholder="Province" required> </select>
+            <br><br>   
+            Municipality     
+            <select style="display:inline;width:auto;" onchange="populateBarangay()"
+                     id="municipality" name="municipality" placeholder="Municipality" required>   </select> 
+            <br><br>   
+            Barangay                           
+            <select  style="display:inline;width:auto;" 
+                     id="barangay" name="barangay" placeholder="Barangay" required>   </select>   
+            <br><br> 
+            Category        
+            <select style="display:inline;width:auto;" 
+                     id="category" name="category" placeholder="Category" required>   </select>   
+            <br><br>   
+            Manifest      
+            <select style="display:inline;width:auto;" 
+                     id="manifest" name="manifest" placeholder="Manifest" required>   </select>   
+            <br><br>
+            Humancost         
+            <select  style="display:inline;width:auto;"
+                     id="humancost" name="humancost" placeholder="Humancost" required>   </select>     
+            <br><br>  
+            Actor        
+            <select style="display:inline;width:auto;" 
+                     id="actor" name="actor" placeholder="Actor" required>   </select>        
+            <br><br> 
+            Male                               
+            <input  style="display:inline;width:auto;" type="number"
+                    onkeypress='return validateQty(event)' value="1" min ="0"
+                    id="male" name="male" placeholder="Male" required/>  
+            <br><br>
+            Female        
+            <input  style="display:inline;width:auto;" type="number" 
+            		onkeypress='return validateQty(event)'  value="0" min ="0"
+                    id="female" name="female" placeholder="Female" required/>  
+            <br><br> 
+            Undetermined        
+            <input style="display:inline;width:auto;" type="number" 
+            		onkeypress='return validateQty(event)' value="0" min ="0"
+                    id="undetermined" name="undetermined" placeholder="Undetermined" required/>  
+                     <br><br>
+
+
+			</form>
+            <button class="mdl-button mdl-js-button mdl-button--raised"  id="submit" name="submit"
+      				onclick="validateForm2()" style="float: left;">Submit</button>
+ 
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BANGSAMORO CONFLICT MANAGER</title>
+
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+  <link rel="stylesheet" href="main.css">
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <!-- Firebase -->
+  <!-- ***********************************************************************************************************************
+       * TODO(DEVELOPER): Paste the initialization snippet from: Firebase Console > Overview > Add Firebase to your web app. *
+       *********************************************************************************************************************** -->
+<script src="https://www.gstatic.com/firebasejs/3.3.2/firebase.js"></script>
+<script type="text/javascript" src="js/index.js">  </script>
+<script type="text/javascript" src="js/data.js"></script>
+
+<script>
+
+</script>
+  <script type="text/javascript">
+   // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDHgD8QWHeDqEzqzsjwr1AzrJiu4dNA8YQ",
+    authDomain: "bangsamoro-conflict-manager.firebaseapp.com",
+    databaseURL: "https://bangsamoro-conflict-manager.firebaseio.com",
+    storageBucket: "bangsamoro-conflict-manager.appspot.com",
+    messagingSenderId: "589509790376"
+
+  };
+  firebase.initializeApp(config);
+
+   function toggleSignIn() {
+      if (firebase.auth().currentUser) {
+        // [START signout]
+        firebase.auth().signOut();
+        location.reload(); 
+        // [END signout]
+      } else {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        if (email.length < 4) {
+          alert('Please enter an email address.');
+          return;
+        }
+        if (password.length < 4) {
+          alert('Please enter a password.');
+          return;
+        }
+        // Sign in with email and pass.
+        // [START authwithemail]
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+          document.getElementById('quickstart-sign-in').disabled = false;
+          // [END_EXCLUDE]
+        });
+        // [END authwithemail]
+      }
+      document.getElementById('quickstart-sign-in').disabled = true;
+    }
+
+    /**
+     * Handles the sign up button press.
+     */
+    function handleSignUp() {
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      if (email.length < 4) {
+        alert('Please enter an email address.');
+        return;
+      }
+      if (password.length < 4) {
+        alert('Please enter a password.');
+        return;
+      }
+      // Sign in with email and pass.
+      // [START createwithemail]
+      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // [START_EXCLUDE]
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+        // [END_EXCLUDE]
+      });
+      // [END createwithemail]
+    }
+
+    /**
+     * Sends an email verification to the user.
+     */
+    function sendEmailVerification() {
+      // [START sendemailverification]
+      firebase.auth().currentUser.sendEmailVerification().then(function() {
+        // Email Verification sent!
+        // [START_EXCLUDE]
+        alert('Email Verification Sent!');
+        // [END_EXCLUDE]
+      });
+      // [END sendemailverification]
+    }
+
+    function sendPasswordReset() {
+      var email = document.getElementById('email').value;
+      // [START sendpasswordemail]
+      firebase.auth().sendPasswordResetEmail(email).then(function() {
+        // Password Reset Email Sent!
+        // [START_EXCLUDE]
+        alert('Password Reset Email Sent!');
+        // [END_EXCLUDE]
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // [START_EXCLUDE]
+        if (errorCode == 'auth/invalid-email') {
+          alert(errorMessage);
+        } else if (errorCode == 'auth/user-not-found') {
+          alert(errorMessage);
+        }
+        console.log(error);
+        // [END_EXCLUDE]
+      });
+      // [END sendpasswordemail];
+    }
+
+    /**
+     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
+     */
+    function initApp() {
+      // Listening for auth state changes.
+      // [START authstatelistener]
+   
+      firebase.auth().onAuthStateChanged(function(user) {
+        // [START_EXCLUDE silent]
+        document.getElementById('quickstart-verify-email').disabled = true;
+        // [END_EXCLUDE]
+        if (user) {
+          // User is signed in.
+          var displayName = user.displayName;
+          var email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          var providerData = user.providerData;
+          // [START_EXCLUDE silent]
+          document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+          document.getElementById('quickstart-sign-in').textContent = 'Sign out';
+
+          if (!emailVerified) {
+            document.getElementById('quickstart-verify-email').disabled = false;
+          //  alert("Data saved successfully.");
+           home.addData();
+          }
+          // [END_EXCLUDE]
+        } else {
+          // User is signed out.
+          // [START_EXCLUDE silent]
+          document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
+          document.getElementById('quickstart-sign-in').textContent = 'Sign in';
+     //     document.getElementById('quickstart-account-details').textContent = 'null';
+          // [END_EXCLUDE]
+        }
+        // [START_EXCLUDE silent]
+        document.getElementById('quickstart-sign-in').disabled = false;
+        // [END_EXCLUDE]
+      });
+      // [END authstatelistener]
+
+      document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
+      document.getElementById('quickstart-sign-up').addEventListener('click', handleSignUp, false);
+      document.getElementById('quickstart-verify-email').addEventListener('click', sendEmailVerification, false);
+      document.getElementById('quickstart-password-reset').addEventListener('click', sendPasswordReset, false);
+    }
+
+ 
+    window.onload = function() {
+      initApp();
+    };
+  </script>
+</head>
+<body id="box">
+
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+
+
+  <main class="mdl-layout__content mdl-color--grey-100">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid" >
+
+
+      <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop" >
+        <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+          <h2 class="mdl-card__title-text">Email &amp; Password Authentication</h2>
+        </div>
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600" >
+          <p>Enter an email and password below and either sign in to an existing account or sign up</p>
+
+          <input class="mdl-textfield__input" style="display:inline;width:auto;" type="text" id="email" name="email" placeholder="Email"/>
+          &nbsp;&nbsp;&nbsp;
+          <input class="mdl-textfield__input" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
+          <br/><br/>
+          <button disabled class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Sign In</button>
+          &nbsp;&nbsp;&nbsp;
+          <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-up" name="signup">Sign Up</button>
+          &nbsp;&nbsp;&nbsp;
+          <button class="mdl-button mdl-js-button mdl-button--raised" disabled id="quickstart-verify-email" name="verify-email">Send Email Verification</button>
+          &nbsp;&nbsp;&nbsp;
+          <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-password-reset" name="verify-email">Send Password Reset Email</button>
+
+    
+          <div class="quickstart-user-details-container">
+            Sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
+            
+            
+          </div>
+       
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+</body>
+
+<script type="text/javascript">
+   function getConflict(){
+    var ref = new Firebase("https://laasitfirebaseauth.firebaseio.com/Conflict");  
+    ref.on("value", function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+    // key will be "fred" the first time and "barney" the second time
+    var key = childSnapshot.key();
+    // childData will be the actual contents of the child
+    var childData = childSnapshot.val();
+    console.log(key +"="+childData.code);
+  });
+      
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+}
+
+    function myFunction() {
+       document.getElementById('submit').disabled = true;
+      var ref = new Firebase(home.databaseURL+"incident");
+      // Attach an asynchronous callback to read the data at our posts reference
+        var xdate =document.getElementById('date').value;
+        var province =document.getElementById('province').value;
+        var municipality = document.getElementById('municipality').value
+        var barangay =document.getElementById('barangay').value;
+        var category =document.getElementById('category').value;
+        var manifest =document.getElementById('manifest').value; 
+        var humancost =document.getElementById('humancost').value;
+        var actor =document.getElementById('actor').value;
+        var male =document.getElementById('male').value;
+        var female = document.getElementById('female').value;
+        var undetermined =document.getElementById('undetermined').value;
+
+        var total = parseInt(male)+parseInt(female)+parseInt(undetermined);
+
+          ref.push({
+          "date": xdate, 
+          "province": province,
+          "municipality": municipality,
+          "barangay": barangay,
+          "category": category,
+          "manifest": manifest,
+          "humancost": humancost,
+          "actor": actor,
+          "male": male,
+          "female": female,
+          "undetermined": undetermined,
+          "total": total}, function(error) {
+         if (error) {
+              alert("Data could not be saved." + error);
+          } else {
+
+              if (male!="0")
+              totalperYear("gr_gender","Male",xdate,parseInt(male),1); 
+              if (female!="0")
+              totalperYear("gr_gender","Female",xdate,parseInt(female),1); 
+              if (undetermined!="0")
+              totalperYear("gr_gender","Undetermined",xdate,parseInt(undetermined),1); 
+
+              totalperYear("gr_actor",actor,xdate,1,1);            
+              totalperYear("gr_actor_province",actor+"/"+province,xdate,1,1);
+              totalperYear("gr_actor_category",actor+"/"+category,xdate,1,1);
+              totalperYear("gr_actor_manifest",actor+"/"+manifest,xdate,1,1);
+              totalperYear("gr_actor_humancost",actor+"/"+humancost,xdate,1,1);
+
+              totalperYear("gr_category",category,xdate,1,1);
+              totalperYear("gr_humancost",humancost,xdate,1,1);
+              totalperYear("gr_manifest",manifest,xdate,1,1);
+
+              totalperYear("gr_province",province,xdate,1,1);
+              totalperYear("gr_province_category",province+"/"+category,xdate,1,1);
+              totalperYear("gr_province_humancost",province+"/"+humancost,xdate,1,1);
+              totalperYear("gr_province_manifest",province+"/"+manifest,xdate,1,1);
+              totalperYear("gr_province_actor",province+"/"+actor,xdate,1,1);
+
+              //incident by gender needs 3 input
+              if (male!="0")
+              totalperYear("gr_province_gender",province+"/Male",xdate,parseInt(male),1);
+              if (female!="0")
+              totalperYear("gr_province_gender",province+"/Female",xdate,parseInt(female),1);
+              if (undetermined!="0")
+              totalperYear("gr_province_gender",province+"/Undetermined",xdate,parseInt(undetermined),1);
+
+              if (male!="0")
+              totalperYear("gr_category_gender",category+"/Male",xdate,parseInt(male),1);
+              if (female!="0")
+              totalperYear("gr_category_gender",category+"/Female",xdate,parseInt(female),1);
+              if (undetermined!="0")
+              totalperYear("gr_category_gender",category+"/Undetermined",xdate,parseInt(undetermined),1);
+
+              document.getElementById('date').value=today();
+              document.getElementById('province').value="";
+              document.getElementById('municipality').value="";
+              document.getElementById('barangay').value="";
+              document.getElementById('category').value="";
+              document.getElementById('manifest').value="";
+              document.getElementById('humancost').value="";
+              document.getElementById('actor').value="";
+              document.getElementById('male').value="0";
+              document.getElementById('female').value="0";
+              document.getElementById('undetermined').value="0";
+              alert("Data saved successfully.");
+            }
+         });
+        document.getElementById('submit').disabled = false;
+      }  
+        function totalperYear(table,field,mydate,num,op) {
+    
+          var d = new Date(mydate);
+          var year = d.getFullYear();
+
+          var fb = new Firebase(home.databaseURL);
+           fb.child(table+"/"+field+"/"+year).transaction(function(currentVal) {
+
+             return (op==1)?((currentVal||0)+num):((currentVal||0)-num);
+           });
+
+
+           fb.child(table+"_all/"+field).transaction(function(currentVal) {
+
+             return (op==1)?((currentVal||0)+num):((currentVal||0)-num);
+           });
+
+           //for dropdown year
+            fb.child("graph_year/"+year).transaction(function(currentVal) {
+
+             return ((currentVal||0)+1);
+           });
+        }
+
+
+      function validateQty(event) {
+        var key = window.event ? event.charCode  : event.which;
+
+        if (key == 8 || event.charCode  == 46
+         || event.charCode  == 37 || event.charCode  == 39) {
+            return true;
+        }
+        else if ( key < 48 || key > 57 ) {
+            return false;
+        }
+        else return true;
+        };  
+
+      function validateDate(){
+        var input =document.getElementById('date').value;
+        var pattern =/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
+
+        if(!pattern.test(input)){
+          alert("invalid");
+          document.getElementById('date').value="";
+        }
+      }
+
+      function validateForm(form) {
+
+        var nameField = form.name;
+        var date = form.date;
+        var province = form.province;
+        var municipality = form.municipality;
+
+    
+          if(isNotEmpty(date)) {
+            return true;
+          }
+          if(isNotEmpty(province)) {
+            return true;
+          }
+          if(isNotEmpty(municipality)) {
+            return true;
+          }     
+          myFunction();          
+        return false;
+      }
+
+      function isNotEmpty(field) {
+
+          var fieldData = field.value;
+
+          if (fieldData.length == 0 || fieldData == "" || fieldData == fieldData) {
+
+              field.className = "FieldError"; //Classs to highlight error
+              alert("Please correct the errors in order to continue.");
+              return false;
+          } else {
+
+              field.className = "FieldOk"; //Resets field back to default
+              return true; //Submits form
+          }
+      }  
+
+
+    function validateForm2()
+    {
+      var fields = ["municipality","province"]
+
+      var i, l = fields.length;
+      var fieldname;
+      var ok=0;
+      for (i = 0; i < l; i++) {
+        fieldname = fields[i];
+        if (document.forms["form1"][fieldname].value === "") {
+          document.forms["form1"][fieldname].className = "FieldError";
+          alert(fieldname + " can not be empty");
+          return false;
+        }
+        ok=ok+1;
+      }
+      if (ok==l){
+      myFunction(); 
+    }
+      return true;
+    }
+
+
+ </script>
+
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BANGSAMORO Conflict Viewer</title>
+    <meta charset="utf-8">
+
+    <script src="http://www.google.com/jsapi"></script> 
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/2.1.9/highcharts.js"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.js"></script>-->
+
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="https://www.gstatic.com/firebasejs/3.3.2/firebase.js"></script>
+ 
+    <script type="text/javascript">
+   // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDHgD8QWHeDqEzqzsjwr1AzrJiu4dNA8YQ",
+        authDomain: "bangsamoro-conflict-manager.firebaseapp.com",
+        databaseURL: "https://bangsamoro-conflict-manager.firebaseio.com",
+        storageBucket: "bangsamoro-conflict-manager.appspot.com",
+        messagingSenderId: "589509790376"
+
+      };
+
+      firebase.initializeApp(config);
+
+      
+  </script>
+
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '1748658048722747',
+          xfbml      : true,
+          version    : 'v2.7'
+        });
+        // Place following code after FB.init call.
+
+        function onLogin(response) {
+          if (response.status == 'connected') {
+            FB.api('/me?fields=first_name', function(data) {
+              //var welcomeBlock = document.getElementById('fb-welcome');
+             // welcomeBlock.innerHTML = data.first_name + '!';
+            });
+          }
+        }
+
+        FB.getLoginStatus(function(response) {
+          // Check login status on load, and if the user is
+          // already logged in, go directly to the welcome message.
+          if (response.status == 'connected') {
+            onLogin(response);
+          } else {
+            // Otherwise, show Login dialog first.
+            FB.login(function(response) {
+              onLogin(response);
+            }, {scope: 'user_friends, email'});
+          }
+        });
+      
+            
+      };
+
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+
+
+
+    </script>
+    <script src="chartkick.js"></script>
+    <script>
+      Chartkick.configure({language: "de"});
+    </script>
+
+    <style>
+      body {
+        padding: 20px;
+        margin: 0;
+        font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+      }
+
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+  <h4 id="fb-welcome">BANGSAMORO Conflict Viewer</h4>
+    <select  style="display:inline;width:auto;"  onchange="getFirebase()" id="report" name="report" >
+       <option value="gr_province_all">Incidents by Province</option>
+       <option value="gr_actor_all">Incidents by Actors</option>
+       <option value="gr_category_all">Incidents by Category</option>
+       
+       <option value="gr_humancost_all">Incidents by Human Cost</option>
+       <option value="gr_manifest_all">Incidents by Manifest</option>
+       <option value="gr_gender_all">Incidents by Gender</option>
+    </select>
+
+    
+    <h1 id="reportTitle">Pie Chart</h1>
+    <div id="chart-8" style="height: 400px;"></div>
+    <div id="chart-2" style="height: 400px;"></div>
+    <div id="chart-3" style="height: 400px;"></div>
+    <div id="chart-1" style="height: 400px;"></div>    
+    
+
+    <script>
+        function getFirebase(){
+         var fb = document.getElementById("report").value;
+         var tx = document.getElementById("report");
+         document.getElementById("reportTitle").innerHTML =tx.options[tx.selectedIndex].text;
+
+            firebase.database().ref(fb).on('value', function(snap){
+              new Chartkick.LineChart("chart-1",snap.val());
+            });
+            firebase.database().ref(fb).on('value', function(snap){
+              new Chartkick.PieChart("chart-2",snap.val());
+            });
+            firebase.database().ref(fb).on('value', function(snap){
+              new Chartkick.ColumnChart("chart-3",snap.val());
+            });
+            if (fb =="gr_province_all"){
+              document.getElementById("chart-8").style.height="400px"
+              firebase.database().ref(fb).on('value', function(snap){
+                new Chartkick.GeoChart("chart-8",snap.val(),
+                  {library: {region: "PH", displayMode: "markers", colorAxis: {colors: ['green', 'blue']}}});
+              });  
+            } else{
+              document.getElementById("chart-8").innerHTML="";
+               document.getElementById("chart-8").style.height="0px";
+            }
+        }
+
+     getFirebase();
+    </script>
+
+
+
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
+  </body>
+</html>

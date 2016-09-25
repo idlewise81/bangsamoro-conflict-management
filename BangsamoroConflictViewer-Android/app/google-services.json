@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "589509790376",
+    "firebase_url": "https://bangsamoro-conflict-manager.firebaseio.com",
+    "project_id": "bangsamoro-conflict-manager",
+    "storage_bucket": "bangsamoro-conflict-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589509790376:android:8ed18569052f2a07",
+        "android_client_info": {
+          "package_name": "lagsit.bangsamoroconflictviewer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589509790376-6k841st9embqmjlkouvdlmdkmvdbi3ig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADyKrWG4ah0NEy069yBODVNwcbjgA1nWY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
